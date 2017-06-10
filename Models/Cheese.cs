@@ -8,6 +8,11 @@ namespace cheeseIt.Models
         public int? DaysToSell { get; set; }
         public Decimal? Price { get; set; }
         public CheeseType Type { get; set; }
+        public Decimal? CurrentPrice {
+            get {
+                return null;
+            }
+        }
     }
 
     public enum CheeseType {
