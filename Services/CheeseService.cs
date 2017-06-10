@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using System.Xml.Serialization;
@@ -23,8 +22,6 @@ namespace cheeseIt.Services
             var cheeses = new List<Cheese>();
             if (items != null)
             {
-                //cheeses.Add(new Cheese { Name = "test", BestBeforeDate = DateTime.Now, DaysToSell = 5, Price = 15.5M });
-                //cheeses.Add(new Cheese { Name = "test2", BestBeforeDate = DateTime.Now, DaysToSell = 6, Price = 16.5M });
                 var converter = new CheeseConverter();
                 foreach (var item in items)
                 {
