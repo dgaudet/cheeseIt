@@ -2,3 +2,4 @@
 .bowerrc
 bin/
 obj/
+*.userprefs
