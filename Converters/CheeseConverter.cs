@@ -40,13 +40,21 @@ namespace cheeseIt.Converters
 					}
 				}
 
+                var type = CheeseType.Standard;
+                if (!string.IsNullOrWhiteSpace(item.Type))
+                {
+                    if(Enum.TryParse(item.Type, out CheeseType parsedType)){
+                        type = parsedType;
+                    }
+                }
+
                 return new Cheese
                 {
                     Name = item.Name,
                     BestBeforeDate = bestBeforeDate,
                     DaysToSell = daysToSell,
                     Price = price,
-                    Type = item.Type
+                    Type = type
                 };
             }
         }
