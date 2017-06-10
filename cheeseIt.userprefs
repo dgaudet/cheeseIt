@@ -1,0 +1,19 @@
+﻿<Properties StartupConfiguration="{89AA5F03-4B93-4FB3-A63C-D170970C299C}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Models/Item.cs">
+    <Files>
+      <File FileName="Services/CheeseService.cs" Line="36" Column="65" />
+      <File FileName="Controllers/CheeseController.cs" Line="23" Column="10" />
+      <File FileName="rustydragon_13062017.xml" Line="9" Column="49" />
+      <File FileName="Models/Item.cs" Line="18" Column="1" />
+      <File FileName="Models/Cheese.cs" Line="10" Column="24" />
+      <File FileName="Converters/CheeseConverter.cs" Line="27" Column="52" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.cheeseIt PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
