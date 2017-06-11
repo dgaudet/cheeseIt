@@ -21,7 +21,8 @@ namespace cheeseIt.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var cheeses = _cheeseService.GetCheeses();
+            var dateRecieved = DateTime.Parse("06/13/2017");
+            var cheeses = _cheeseService.LoadCheeses(dateRecieved);
             return View(cheeses);
         }
     }

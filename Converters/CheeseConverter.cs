@@ -5,7 +5,7 @@ namespace cheeseIt.Converters
 {
     public class CheeseConverter
     {
-        public Cheese CheeseFromItem(Item item){
+        public Cheese CheeseFromItem(Item item, DateTime dateRecieved){
             if (string.IsNullOrEmpty(item.Name))
             {
                 return null;
@@ -54,7 +54,8 @@ namespace cheeseIt.Converters
                     BestBeforeDate = bestBeforeDate,
                     DaysToSell = daysToSell,
                     Price = price,
-                    Type = type
+                    Type = type,
+                    DateRecieved = dateRecieved
                 };
             }
         }

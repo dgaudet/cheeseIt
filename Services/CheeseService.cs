@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using System.Xml.Serialization;
@@ -16,7 +17,7 @@ namespace cheeseIt.Services
             _env = environment;
         }
 
-        public Cheese[] GetCheeses(){
+        public Cheese[] LoadCheeses(DateTime dateRecieved){
             var items = GetItems();
 
             var cheeses = new List<Cheese>();
@@ -25,7 +26,7 @@ namespace cheeseIt.Services
                 var converter = new CheeseConverter();
                 foreach (var item in items)
                 {
-                    cheeses.Add(converter.CheeseFromItem(item));
+                    cheeses.Add(converter.CheeseFromItem(item, dateRecieved));
                 }
             }
             return cheeses.ToArray();
