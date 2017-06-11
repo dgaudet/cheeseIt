@@ -12,9 +12,9 @@ namespace cheeseIt.Controllers
 {
     public class CheeseController : Controller
     {
-        private readonly CheeseService _cheeseService;
+        private readonly CheeseLoaderService _cheeseService;
         
-        public CheeseController(CheeseService cheeseService){
+        public CheeseController(CheeseLoaderService cheeseService){
             _cheeseService = cheeseService;
         }
         

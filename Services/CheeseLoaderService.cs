@@ -8,11 +8,11 @@ using cheeseIt.Converters;
 
 namespace cheeseIt.Services
 {
-    public class CheeseService
+    public class CheeseLoaderService
     {
         private readonly IHostingEnvironment _env;
 
-        public CheeseService(IHostingEnvironment environment)
+        public CheeseLoaderService(IHostingEnvironment environment)
         {
             _env = environment;
         }

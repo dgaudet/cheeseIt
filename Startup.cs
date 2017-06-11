@@ -29,7 +29,7 @@ namespace cheeseIt
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddSingleton<CheeseService, CheeseService>();
+            services.AddSingleton<CheeseLoaderService, CheeseLoaderService>();
             services.AddMvc();
         }
 
