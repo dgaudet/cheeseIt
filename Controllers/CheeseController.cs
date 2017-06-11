@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
 using cheeseIt.Models;
 using cheeseIt.Services;
 
@@ -12,17 +13,20 @@ namespace cheeseIt.Controllers
 {
     public class CheeseController : Controller
     {
-        private readonly CheeseLoaderService _cheeseService;
+        private readonly ICheeseLoaderService _cheeseService;
+        private readonly IHostingEnvironment _env;
         
-        public CheeseController(CheeseLoaderService cheeseService){
+        public CheeseController(ICheeseLoaderService cheeseService, IHostingEnvironment environment){
             _cheeseService = cheeseService;
+            _env = environment;
         }
         
         // GET: /<controller>/
         public IActionResult Index()
         {
             var dateRecieved = DateTime.Parse("06/13/2017");
-            var cheeses = _cheeseService.LoadCheeses(dateRecieved);
+            string fileName = _env.ContentRootPath + "/rustydragon_13062017.xml";
+            var cheeses = _cheeseService.LoadCheeses(fileName, dateRecieved);
 
             var futureCheesePrices = new Dictionary<String, List<Decimal?>>();
             int daysToCalculate = 7;

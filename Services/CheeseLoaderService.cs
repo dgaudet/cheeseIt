@@ -1,24 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
 using System.Xml.Serialization;
 using cheeseIt.Models;
 using cheeseIt.Converters;
 
 namespace cheeseIt.Services
 {
-    public class CheeseLoaderService
+    public class CheeseLoaderService : ICheeseLoaderService
     {
-        private readonly IHostingEnvironment _env;
-
-        public CheeseLoaderService(IHostingEnvironment environment)
-        {
-            _env = environment;
-        }
-
-        public Cheese[] LoadCheeses(DateTime dateRecieved){
-            var items = GetItems();
+        public Cheese[] LoadCheeses(string fileName, DateTime dateRecieved){
+            var items = GetItems(fileName);
 
             var cheeses = new List<Cheese>();
             if (items != null)
@@ -32,10 +24,10 @@ namespace cheeseIt.Services
             return cheeses.ToArray();
         }
 
-        private List<Item> GetItems(){
+        private List<Item> GetItems(string fileName){
             XmlSerializer ser = new XmlSerializer(typeof(ItemCollection));
             List<Item> items = null;
-			using (FileStream myFileStream = new FileStream(_env.ContentRootPath + "/rustydragon_13062017.xml", FileMode.Open))
+            using (FileStream myFileStream = new FileStream(fileName, FileMode.Open))
 			{
                 items = ((ItemCollection)ser.Deserialize(myFileStream)).Items;
 			}
