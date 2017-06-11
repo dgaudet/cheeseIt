@@ -1,46 +1,48 @@
-﻿@model IEnumerable<cheeseIt.Models.Cheese>
+﻿@model cheeseIt.Models.CheeseViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Cheeses</h2>
 
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-			    <th>
-                    @Html.DisplayNameFor(model => model.DateRecieved)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BestBeforeDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DaysToSell)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-			    <th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-            <th></th>
+            <th>
+                Name
+            </th>
+		    <th>
+                Date Recieved
+            </th>
+            <th>
+                Best Before Date
+            </th>
+            <th>
+                Days To Sell
+            </th>
+            <th>
+                Original Price
+            </th>
+		    <th>
+                Type
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model.Cheeses) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateRecieved)
+			    @item.DateRecieved.ToString("MM/dd/yyyy")				
             </td>
 			<td>
-                @Html.DisplayFor(modelItem => item.BestBeforeDate)
+                @if (item.BestBeforeDate.HasValue)
+                {
+                    @item.BestBeforeDate.Value.ToString("MM/dd/yyyy")
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DaysToSell)
@@ -52,6 +54,53 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
         </tr>
-}
+    }
+    </tbody>
+</table>
+
+<h2>Future Cheese Prices</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                1 Day Old
+            </th>
+            <th>
+                2 Days Old
+            </th>
+            <th>
+                3 Days Old
+            </th>
+            <th>
+                4 Days Old
+            </th>
+            <th>
+                5 Days Old
+            </th>
+            <th>
+                6 Days Old
+            </th>
+            <th>
+                7 Days Old
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (KeyValuePair<string, List<Decimal?>> pair in Model.FutureCheesePrices) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => pair.Key)
+            </td>
+			@foreach (var item in pair.Value) {
+	            <td>
+	                @Html.DisplayFor(modelItem => item)
+	            </td>
+			}
+        </tr>
+    }
     </tbody>
 </table>

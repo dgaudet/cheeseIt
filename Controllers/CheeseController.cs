@@ -23,7 +23,25 @@ namespace cheeseIt.Controllers
         {
             var dateRecieved = DateTime.Parse("06/13/2017");
             var cheeses = _cheeseService.LoadCheeses(dateRecieved);
-            return View(cheeses);
+
+            var futureCheesePrices = new Dictionary<String, List<Decimal?>>();
+            int daysToCalculate = 7;
+            foreach (var cheese in cheeses)
+            {
+                var futurePrices = new List<Decimal?>();
+                for (int i = 0; i < daysToCalculate; i++)
+                {
+                    futurePrices.Add(cheese.PriceForDay(dateRecieved.AddDays(i)));
+                }
+                futureCheesePrices.Add(cheese.Name, futurePrices);
+            }
+
+            var viewModel = new CheeseViewModel
+            {
+                Cheeses = cheeses,
+                FutureCheesePrices = futureCheesePrices
+            };
+            return View(viewModel);
         }
     }
 }
