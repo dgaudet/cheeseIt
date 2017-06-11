@@ -4,7 +4,9 @@ namespace cheeseIt.Models
     public static class CheeseConstants {
 		public static readonly Decimal MAX_PRICE = 20M;
 		public static readonly Decimal STANARD_PRICE_DECREASE_RATE = -0.05M;
+        public static readonly Decimal FRESH_PRICE_DECREASE_RATE = -0.1M;
         public static readonly Decimal AGED_PRICE_INCREASE_RATE = 0.05M;
+        public static readonly Decimal SPECIAL_PRICE_INCREASE_RATE = 0.05M;
     }
 
 	public enum CheeseType
@@ -32,8 +34,13 @@ namespace cheeseIt.Models
             }
             var daysOld = Convert.ToDecimal((day.Date - DateRecieved.Date).TotalDays);
 
-            var decreaseRate = DecreaseRate(day);
-            var calculatedPrice = Price + Price * decreaseRate * daysOld;
+            if (Type != CheeseType.Unique && daysOld > DaysToSell)
+            {
+                return null;
+            }
+
+            var changeRate = ChangeRate(day, daysOld);
+            var calculatedPrice = Price + Price * changeRate * daysOld;
 			if (calculatedPrice > CheeseConstants.MAX_PRICE)
 			{
 				return CheeseConstants.MAX_PRICE;
@@ -45,27 +52,40 @@ namespace cheeseIt.Models
             return calculatedPrice;
         }
 
-        private Decimal DecreaseRate(DateTime day){
-			var decreaseRate = CheeseConstants.STANARD_PRICE_DECREASE_RATE;
-            var bestBeforeDecreaseRate = 2;
+        private Decimal ChangeRate(DateTime day, Decimal daysOld){
+            var changeRate = CheeseConstants.STANARD_PRICE_DECREASE_RATE;
+            var bestBeforeChangeRate = 2;
             switch(Type){
                 case(CheeseType.Aged):
-                    decreaseRate = CheeseConstants.AGED_PRICE_INCREASE_RATE;
-                    bestBeforeDecreaseRate = 1;
+                    changeRate = CheeseConstants.AGED_PRICE_INCREASE_RATE;
+                    bestBeforeChangeRate = 1;
                     break;
+                case (CheeseType.Unique):
+					changeRate = 0;
+					break;
+				case (CheeseType.Fresh):
+					changeRate = CheeseConstants.FRESH_PRICE_DECREASE_RATE;
+					break;
+                case (CheeseType.Special):
+                    changeRate = CheeseConstants.SPECIAL_PRICE_INCREASE_RATE;
+					if (DaysToSell < 6)
+					{
+						changeRate = CheeseConstants.SPECIAL_PRICE_INCREASE_RATE * 2;
+					}
+					break;
                 default:
-                    decreaseRate = CheeseConstants.STANARD_PRICE_DECREASE_RATE;
+                    changeRate = CheeseConstants.STANARD_PRICE_DECREASE_RATE;
                     break;
             }
-			if (BestBeforeDate != null)
+            if (BestBeforeDate != null && Type != CheeseType.Special)
 			{
 				DateTime nonNullBestBefore = BestBeforeDate ?? DateTime.Now;
 				if (nonNullBestBefore.Date < day.Date)
 				{
-                    decreaseRate = decreaseRate * bestBeforeDecreaseRate;
+                    changeRate = changeRate * bestBeforeChangeRate;
 				}
 			}
-            return decreaseRate;
+            return changeRate;
         }
     }
 }
