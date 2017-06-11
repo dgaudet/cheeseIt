@@ -13,32 +13,17 @@ namespace cheeseIt.Controllers
 {
     public class CheeseController : Controller
     {
-        private readonly ICheeseLoaderService _cheeseService;
-        private readonly IHostingEnvironment _env;
+        private readonly ICheeseService _cheeseService;
         
-        public CheeseController(ICheeseLoaderService cheeseService, IHostingEnvironment environment){
+        public CheeseController(ICheeseService cheeseService){
             _cheeseService = cheeseService;
-            _env = environment;
         }
         
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var dateRecieved = DateTime.Parse("06/13/2017");
-            string fileName = _env.ContentRootPath + "/rustydragon_13062017.xml";
-            var cheeses = _cheeseService.LoadCheeses(fileName, dateRecieved);
-
-            var futureCheesePrices = new Dictionary<String, List<Decimal?>>();
-            int daysToCalculate = 7;
-            foreach (var cheese in cheeses)
-            {
-                var futurePrices = new List<Decimal?>();
-                for (int i = 0; i < daysToCalculate; i++)
-                {
-                    futurePrices.Add(cheese.PriceForDay(dateRecieved.AddDays(i)));
-                }
-                futureCheesePrices.Add(cheese.Name, futurePrices);
-            }
+            var cheeses = _cheeseService.GetAllCheeses().ToArray();
+            var futureCheesePrices = _cheeseService.FutureCheesePrices(7);
 
             var message = "";
             if (cheeses.Length == 0)

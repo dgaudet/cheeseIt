@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using cheeseIt.Models;
 using cheeseIt.Converters;
+using cheeseIt.Repositories;
 
 namespace cheeseIt.Services
 {
     public class CheeseLoaderService : ICheeseLoaderService
     {
+        private ICheeseRepository _cheeseRepo;
+        
+        public CheeseLoaderService(ICheeseRepository cheeseRepository){
+            _cheeseRepo = cheeseRepository;
+        }
+        
         public Cheese[] LoadCheeses(string fileName, DateTime dateRecieved){
             var items = GetItems(fileName);
 
@@ -21,7 +28,8 @@ namespace cheeseIt.Services
                     cheeses.Add(converter.CheeseFromItem(item, dateRecieved));
                 }
             }
-            return cheeses.ToArray();
+            _cheeseRepo.InsertCheeses(cheeses);
+            return new List<Cheese>().ToArray();
         }
 
         private List<Item> GetItems(string fileName){

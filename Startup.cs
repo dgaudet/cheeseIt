@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using cheeseIt.Services;
+using cheeseIt.Repositories;
 
 namespace cheeseIt
 {
@@ -30,6 +31,8 @@ namespace cheeseIt
         {
             // Add framework services.
             services.AddSingleton<ICheeseLoaderService, CheeseLoaderService>();
+            services.AddSingleton<ICheeseRepository, CheeseRepository>();
+            services.AddSingleton<ICheeseService, CheeseService>();
             services.AddMvc();
         }
 

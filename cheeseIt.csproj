@@ -22,5 +22,6 @@
     <Folder Include="Converters\" />
     <Folder Include="Views\LoadFile\" />
     <Folder Include="Models\LoadFile\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 </Project>
