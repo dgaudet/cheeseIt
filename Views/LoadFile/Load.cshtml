@@ -1,0 +1,37 @@
+﻿﻿@model cheeseIt.Models.LoadFileViewModel
+
+@{
+    ViewData["Title"] = "Load Cheese File";
+}
+
+<h2>Load Cheeses</h2>
+
+<form asp-action="Load">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="FileName" class="col-md-2 control-label">File Name</label>
+            <div class="col-md-10">
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>
+        </div>
+		<div class="form-group">
+            <label asp-for="RecievedDate" class="col-md-2 control-label">Received Date</label>
+            <div class="col-md-10">
+                <input asp-for="RecievedDate" class="form-control" />
+                <span asp-validation-for="RecievedDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Load" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+	<a asp-area="" asp-controller="Cheese" asp-action="Index">Back To Cheese List</a>
+</div>

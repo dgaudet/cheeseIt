@@ -6,12 +6,12 @@ namespace cheeseIt.Converters
     public class CheeseConverter
     {
         public Cheese CheeseFromItem(Item item, DateTime dateRecieved){
-            if (string.IsNullOrEmpty(item.Name))
+            if (string.IsNullOrWhiteSpace(item.Name))
             {
                 return null;
             } else {
                 int? daysToSell = null;
-                if (!string.IsNullOrEmpty(item.DaysToSell))
+                if (!string.IsNullOrWhiteSpace(item.DaysToSell))
                 {
                     int daysToSellNotNull;
                     if (int.TryParse(item.DaysToSell, out daysToSellNotNull))
@@ -21,7 +21,7 @@ namespace cheeseIt.Converters
                 }
 
                 decimal? price = null;
-                if (!string.IsNullOrEmpty(item.Price))
+                if (!string.IsNullOrWhiteSpace(item.Price))
 				{
                     decimal priceNotNull;
                     if (decimal.TryParse(item.Price, out priceNotNull))
@@ -31,7 +31,7 @@ namespace cheeseIt.Converters
 				}
 
                 DateTime? bestBeforeDate = null;
-                if (!string.IsNullOrEmpty(item.BestBeforeDate))
+                if (!string.IsNullOrWhiteSpace(item.BestBeforeDate))
 				{
 					DateTime bestBeforeNotNull;
                     if (DateTime.TryParse(item.BestBeforeDate, out bestBeforeNotNull))

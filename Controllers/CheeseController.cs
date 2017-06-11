@@ -40,10 +40,17 @@ namespace cheeseIt.Controllers
                 futureCheesePrices.Add(cheese.Name, futurePrices);
             }
 
+            var message = "";
+            if (cheeses.Length == 0)
+            {
+                message = "Sorry there are no Cheeses Loaded, please load some cheeses";
+            }
+
             var viewModel = new CheeseViewModel
             {
                 Cheeses = cheeses,
-                FutureCheesePrices = futureCheesePrices
+                FutureCheesePrices = futureCheesePrices,
+                Message = message
             };
             return View(viewModel);
         }

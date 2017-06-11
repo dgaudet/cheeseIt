@@ -4,6 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
+@if(!string.IsNullOrWhiteSpace(Model.Message)){
+    <h2>@Model.Message</h2>
+}
+
+<h2>Load New Cheeses</h2>
+<p>
+	<a asp-area="" asp-controller="LoadFile" asp-action="Load">Load Cheese File</a>
+</p>
+<hr />
+
 <h2>Cheeses</h2>
 
 <table class="table">

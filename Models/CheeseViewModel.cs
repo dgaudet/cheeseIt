@@ -8,5 +8,6 @@ namespace cheeseIt.Models
     {
         public IEnumerable<Cheese> Cheeses {get; set;}
         public Dictionary<String, List<Decimal?>> FutureCheesePrices { get; set; }
+        public String Message { get; set; }
     }
 }
