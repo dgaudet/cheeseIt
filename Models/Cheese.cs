@@ -68,7 +68,7 @@ namespace cheeseIt.Models
 					break;
                 case (CheeseType.Special):
                     changeRate = CheeseConstants.SPECIAL_PRICE_INCREASE_RATE;
-					if (DaysToSell < 6)
+                    if (DaysToSell - daysOld < 6)
 					{
 						changeRate = CheeseConstants.SPECIAL_PRICE_INCREASE_RATE * 2;
 					}
