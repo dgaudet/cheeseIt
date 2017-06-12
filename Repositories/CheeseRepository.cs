@@ -14,9 +14,18 @@ namespace cheeseIt.Repositories
 
         public void InsertCheeses(IEnumerable<Cheese> newCheeses){
             _cheeseData.Clear();
-            foreach (var cheese in newCheeses)
+            foreach (var newCheese in newCheeses)
             {
-                _cheeseData.Add(cheese);
+                var duplicateCheeseName = false;
+                foreach(var existingCheese in _cheeseData){
+                    if(existingCheese.Name == newCheese.Name){
+                        duplicateCheeseName = true;   
+                    }
+                }
+                if (!duplicateCheeseName)
+                {
+                    _cheeseData.Add(newCheese);
+                }
             }
         }
 

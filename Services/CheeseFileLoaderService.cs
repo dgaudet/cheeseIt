@@ -38,7 +38,12 @@ namespace cheeseIt.Services
                 var converter = new CheeseConverter();
                 foreach (var item in items)
                 {
-                    cheeses.Add(converter.CheeseFromItem(item, dateRecieved));
+                    var convertedCheese = converter.CheeseFromItem(item, dateRecieved);
+                    if (convertedCheese != null)
+                    {
+                        cheeses.Add(convertedCheese);
+                    }
+
                 }
             }
             _cheeseRepo.InsertCheeses(cheeses);
