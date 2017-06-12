@@ -6,6 +6,10 @@
 
 <h2>Load Cheeses</h2>
 
+@if (ViewBag.result != null) {
+    <p class="@ViewBag.resultCssClass">@ViewBag.result @if(ViewBag.showLink){<a asp-area="" asp-controller="Cheese" asp-action="Index">View Cheese List</a>}</p>   
+}
+        
 <form asp-action="Load" enctype="multipart/form-data">
     <div class="form-horizontal">
         <hr />

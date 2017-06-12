@@ -6,7 +6,7 @@ namespace cheeseIt.Services
 {
     public interface ICheeseLoaderService
     {
-        Cheese[] LoadCheeses(string fileName, DateTime dateRecieved);
-        Cheese[] LoadCheeses(IFormFile file, DateTime dateRecieved);
+        int LoadCheeses(string fileName, DateTime dateRecieved);
+        int LoadCheeses(IFormFile file, DateTime dateRecieved);
     }
 }

@@ -17,51 +17,52 @@ namespace cheeseIt.Services
             _cheeseRepo = cheeseRepository;
         }
 
-        public Cheese[] LoadCheeses(string fileName, DateTime dateRecieved){
+        public int LoadCheeses(string fileName, DateTime dateRecieved){
             var items = GetItems(fileName);
-
-            return getCheeseFromItems(items, dateRecieved);
+            var cheeses = convertAndStoreCheeseForItems(items, dateRecieved);
+            return cheeses;
         }
 
-		public Cheese[] LoadCheeses(IFormFile file, DateTime dateRecieved)
-		{
-			var items = GetItems(file);
+        public int LoadCheeses(IFormFile file, DateTime dateRecieved)
+        {
+            var items = GetItems(file);
+            var cheeses = convertAndStoreCheeseForItems(items, dateRecieved);
 
-            return getCheeseFromItems(items, dateRecieved);
-		}
-
-        private Cheese[] getCheeseFromItems(List<Item> items, DateTime dateRecieved){
-			var cheeses = new List<Cheese>();
-			if (items != null)
-			{
-				var converter = new CheeseConverter();
-				foreach (var item in items)
-				{
-					cheeses.Add(converter.CheeseFromItem(item, dateRecieved));
-				}
-			}
-			_cheeseRepo.InsertCheeses(cheeses);
-			return new List<Cheese>().ToArray();
+            return cheeses;
         }
-		
+
+        private int convertAndStoreCheeseForItems(List<Item> items, DateTime dateRecieved){
+            var cheeses = new List<Cheese>();
+            if (items != null)
+            {
+                var converter = new CheeseConverter();
+                foreach (var item in items)
+                {
+                    cheeses.Add(converter.CheeseFromItem(item, dateRecieved));
+                }
+            }
+            _cheeseRepo.InsertCheeses(cheeses);
+            return cheeses.Count;
+        }
+        
         private List<Item> GetItems(IFormFile file)
-		{
-			XmlSerializer ser = new XmlSerializer(typeof(ItemCollection));
-			List<Item> items = null;
-			using (var fileStream = file.OpenReadStream())
-			{
-				items = ((ItemCollection)ser.Deserialize(fileStream)).Items;
-			}
-			return items;
-		}
+        {
+            XmlSerializer ser = new XmlSerializer(typeof(ItemCollection));
+            List<Item> items = null;
+            using (var fileStream = file.OpenReadStream())
+            {
+                items = ((ItemCollection)ser.Deserialize(fileStream)).Items;
+            }
+            return items;
+        }
 
         private List<Item> GetItems(string fileName){
             XmlSerializer ser = new XmlSerializer(typeof(ItemCollection));
             List<Item> items = null;
             using (FileStream myFileStream = new FileStream(fileName, FileMode.Open))
-			{
+            {
                 items = ((ItemCollection)ser.Deserialize(myFileStream)).Items;
-			}
+            }
             return items;
         }
     }
