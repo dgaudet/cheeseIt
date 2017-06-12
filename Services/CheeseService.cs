@@ -26,7 +26,7 @@ namespace cheeseIt.Services
             foreach (var cheese in cheeses)
 			{
 				var futurePrices = new List<Decimal?>();
-				for (int i = 0; i < numberOfFutureDays; i++)
+				for (int i = 1; i <= numberOfFutureDays; i++)
 				{
 					futurePrices.Add(cheese.PriceForDay(cheese.DateRecieved.AddDays(i)));
 				}
