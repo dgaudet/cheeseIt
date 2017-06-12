@@ -28,14 +28,22 @@ namespace cheeseIt.Controllers
 		// POST: LoadFile/Load
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Load([Bind("FileName,ReceivedDate")] LoadFileViewModel model, IFormFile file)
+		public IActionResult Load([Bind("RecievedDate")] LoadFileViewModel model, IFormFile file)
 		{
-			if (ModelState.IsValid)
-			{
+            if (model.RecievedDate == DateTime.MinValue)
+            {
+                model.DateError = true;
+            }
+            if (file == null)
+            {
+                model.FileError = true;
+            }
+            if (!model.DateError && !model.FileError)
+            {
                 try{
 					if (file.Length > 0)
 					{
-						var dateRecieved = DateTime.Parse("06/13/2017");
+                        var dateRecieved = model.RecievedDate;
 						var numCheesesLoaded = _cheeseService.LoadCheeses(file, dateRecieved);
 
 						ViewBag.result = $"Successfully loaded {numCheesesLoaded} Cheeses.";
@@ -56,6 +64,7 @@ namespace cheeseIt.Controllers
 
 				return View();
 			}
+
 			return View(model);
 		}
     }
