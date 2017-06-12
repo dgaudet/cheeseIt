@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using cheeseIt.Models;
 using cheeseIt.Services;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,14 +28,15 @@ namespace cheeseIt.Controllers
 		// POST: LoadFile/Load
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult Load([Bind("FileName,ReceivedDate")] LoadFileViewModel model)
+		public IActionResult Load([Bind("FileName,ReceivedDate")] LoadFileViewModel model, IFormFile file)
 		{
 			if (ModelState.IsValid)
 			{
-                var fileName = "/Users/dean/Documents/Code/CodeChallenges/PrintAudit/cheeseIt/rustydragon_13062017.xml";
-				var dateRecieved = DateTime.Parse("06/13/2017");
-				//string fileName = _env.ContentRootPath + "/rustydragon_13062017.xml";
-				var cheeses = _cheeseService.LoadCheeses(fileName, dateRecieved);
+                if (file.Length > 0)
+                {
+					var dateRecieved = DateTime.Parse("06/13/2017");
+                    var cheeses = _cheeseService.LoadCheeses(file, dateRecieved);    
+                }
 
 				return RedirectToAction("Load");
 			}
