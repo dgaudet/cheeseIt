@@ -28,7 +28,7 @@ namespace cheeseIt.Controllers
             var message = "";
             if (cheeses.Length == 0)
             {
-                message = "Sorry there are no Cheeses Loaded, please load some cheeses";
+                message = "There are no cheeses loaded yet, please load some cheeses";
             }
 
             var viewModel = new CheeseViewModel
